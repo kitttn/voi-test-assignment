@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kitttn.voiassignment.R
 
-class SearchResultsFragment : Fragment() {
+class SearchFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_search_results, container, false)
+            inflater.inflate(R.layout.fragment_search, container, false)
 }

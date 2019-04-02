@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/app_nav_graph" app:startDestination="@id/startFragment">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/app_nav_graph"
+            app:startDestination="@id/searchFragment">
 
-    <fragment android:id="@+id/startFragment"
-              android:name="kitttn.voiassignment.views.StartFragment"
-              android:label="StartFragment">
+    <fragment android:id="@+id/searchFragment"
+              android:name="kitttn.voiassignment.views.SearchFragment"
+              android:label="StartFragment"
+              tools:layout="@layout/fragment_search">
 
-        <action android:id="@+id/action_startFragment_to_searchResultsFragment"
+        <action android:id="@+id/action_searchFragment_to_searchResultsFragment"
                 app:destination="@id/searchResultsFragment"/>
     </fragment>
     <fragment android:id="@+id/searchResultsFragment"
               android:name="kitttn.voiassignment.views.SearchResultsFragment"
-              android:label="SearchResultsFragment"/>
+              android:label="SearchResultsFragment"
+              tools:layout="@layout/fragment_search_results"/>
 </navigation>
