@@ -6,4 +6,8 @@ data class Artist(val genres: List<String>,
                   val name: String,
                   val uri: String)
 
+data class Paged<T>(val items: List<T>)
+
+data class ArtistsResp(val artists: Paged<Artist>)
+
 data class Image(val width: Int, val height: Int, val url: String)

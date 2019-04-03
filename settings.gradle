@@ -1,2 +1,2 @@
-include ':app', ':api', ':common'
+include ':app', ':network', ':common'
 rootProject.name='VOI Assignment'
