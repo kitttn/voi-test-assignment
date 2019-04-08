@@ -3,6 +3,7 @@ package kitttn.voiassignment.views
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
+import kitttn.api.services.AuthService
 import kitttn.api.services.SpotifyService
 import kitttn.voiassignment.R
 import kitttn.voiassignment.extensions.component
@@ -15,7 +16,8 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class MainActivity : FragmentActivity(), CoroutineScope {
-    @Inject lateinit var spotifyService: SpotifyService
+    @Inject
+    lateinit var authService: AuthService
 
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.IO
@@ -28,14 +30,11 @@ class MainActivity : FragmentActivity(), CoroutineScope {
         loadData()
     }
 
-    private fun loadData() {
-        launch(Dispatchers.IO) {
-            try {
-                val artists = spotifyService.getArtists("Imagine").await()
-                Log.i(TAG, "loadData: Loaded artists: $artists")
-            } catch (e: Exception) {
-                Log.i(TAG, "loadData: Got error: $e")
-            }
+    private fun loadData() = launch {
+        try {
+            authService.authorize().await()
+        } catch (e: Exception) {
+            Log.i(TAG, "loadData: Got error: $e")
         }
     }
 
