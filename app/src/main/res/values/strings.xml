@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VOI Assignment</string>
+    <string name="search_text_hint">Enter artist search query</string>
+    <string name="search">Search</string>
 </resources>

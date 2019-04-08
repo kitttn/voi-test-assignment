@@ -4,6 +4,8 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import kitttn.di.ApiModule
+import kitttn.voiassignment.viewmodel.MainViewModel
+import kitttn.voiassignment.viewmodel.SearchViewModel
 import kitttn.voiassignment.views.MainActivity
 
 @Component(modules = [ApiModule::class])
@@ -15,5 +17,6 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-    fun inject(activity: MainActivity)
+    val mainViewModel: MainViewModel
+    val searchViewModel: SearchViewModel
 }

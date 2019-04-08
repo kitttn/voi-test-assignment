@@ -1,41 +1,38 @@
 package kitttn.voiassignment.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import kitttn.api.services.AuthService
-import kitttn.api.services.SpotifyService
 import kitttn.voiassignment.R
 import kitttn.voiassignment.extensions.component
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import retrofit2.await
-import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
+import kitttn.voiassignment.extensions.createViewModel
 
-class MainActivity : FragmentActivity(), CoroutineScope {
-    @Inject
-    lateinit var authService: AuthService
-
-    override val coroutineContext: CoroutineContext
-        get() = Job() + Dispatchers.IO
+class MainActivity : FragmentActivity() {
+    private val viewModel by lazy {
+        createViewModel(this) { component.mainViewModel }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        component.inject(this)
 
-        loadData()
+        if (!checkStartingIntent()) {
+            authenticate()
+        }
     }
 
-    private fun loadData() = launch {
-        try {
-            authService.authorize().await()
-        } catch (e: Exception) {
-            Log.i(TAG, "loadData: Got error: $e")
-        }
+    private fun checkStartingIntent(): Boolean {
+        val data = intent.data ?: return false
+        val code = data.getQueryParameter("code") ?: return false
+        Log.i(TAG, "checkStartingIntent: Got code: $code")
+        viewModel.authenticate(code)
+        return true
+    }
+
+    private fun authenticate() {
+        startActivity(Intent.parseUri(AuthService.AUTH_REQUEST, 0))
     }
 
     companion object {

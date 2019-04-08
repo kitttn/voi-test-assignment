@@ -2,8 +2,10 @@ package kitttn.di
 
 import dagger.Module
 import dagger.Provides
+import kitttn.api.interceptors.AuthExchangeTokenInterceptor
 import kitttn.api.interceptors.SpotifyAuthInterceptor
 import kitttn.api.services.AuthService
+import kitttn.api.services.AuthService.Companion.BASE_URL
 import kitttn.api.services.SpotifyService
 import kitttn.common.AppStorage
 import okhttp3.OkHttpClient
@@ -33,16 +35,17 @@ object ApiModule {
     }
 
     @JvmStatic @Provides
-    fun provideAuthService(): AuthService {
+    fun provideAuthService(appStorage: AppStorage): AuthService {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val okHttpClient = OkHttpClient.Builder()
+            .addNetworkInterceptor(AuthExchangeTokenInterceptor(appStorage))
             .addNetworkInterceptor(loggingInterceptor)
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://accounts.spotify.com")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
