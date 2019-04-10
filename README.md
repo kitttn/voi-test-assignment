@@ -8,3 +8,5 @@
 * OkHttp client is not shared between two instances of Retrofit services
 * Not handling potential exception when no browser exists to authenticate user
 * generateHeaderSignature is part of the AppStorage class - should be moved somewhere.
+* Storage is not checked for existing tokens - we launch Spotify auth flow every time app starts. 
+* I don't check text widths in recyclerview - this should be done, of course

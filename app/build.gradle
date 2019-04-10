@@ -26,6 +26,8 @@ android {
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
     }
+
+    dataBinding.enabled = true
 }
 
 dependencies {
@@ -43,4 +45,6 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.0.0"
     kapt 'com.google.dagger:dagger-compiler:2.22.1'
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha4'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
