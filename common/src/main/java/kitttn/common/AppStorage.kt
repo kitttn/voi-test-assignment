@@ -10,6 +10,8 @@ class AppStorage @Inject constructor(context: Context) {
 
     fun getAccessToken() = sharedPrefs.getString(ACCESS_TOKEN_FIELD, "") ?: ""
 
+    fun getRefreshToken() = sharedPrefs.getString(REFRESH_TOKEN_FIELD, "") ?: ""
+
     @SuppressLint("ApplySharedPref")
     fun saveTokens(accessToken: String, refreshToken: String, expiresIn: Int) {
         sharedPrefs.edit()

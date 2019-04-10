@@ -11,6 +11,10 @@ interface AuthService {
     @FormUrlEncoded
     fun exchangeTokens(@Field("grant_type") grantType: String, @Field("code") code: String, @Field("redirect_uri") redirectUri: String): Call<TokenResponse>
 
+    @POST("/api/token")
+    @FormUrlEncoded
+    fun refreshToken(@Field("refresh_code") refreshCode: String, @Field("grant_type") grantType: String = "refresh_token"): Call<TokenResponse>
+
     companion object {
         const val REDIRECT_URI = "voiapp://auth-result"
         const val BASE_URL = "https://accounts.spotify.com"

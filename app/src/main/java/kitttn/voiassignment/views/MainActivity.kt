@@ -18,15 +18,15 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (!checkStartingIntent()) {
+        if (!checkStartingWithIntent() && !viewModel.checkAuthenticationExists()) {
             authenticate()
         }
     }
 
-    private fun checkStartingIntent(): Boolean {
+    private fun checkStartingWithIntent(): Boolean {
         val data = intent.data ?: return false
         val code = data.getQueryParameter("code") ?: return false
-        Log.i(TAG, "checkStartingIntent: Got code: $code")
+        Log.i(TAG, "checkStartingWithIntent: Got code: $code")
         viewModel.authenticate(code)
         return true
     }

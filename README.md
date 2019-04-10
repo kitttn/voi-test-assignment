@@ -11,3 +11,4 @@
 * Storage is not checked for existing tokens - we launch Spotify auth flow every time app starts. 
 * I don't check text widths in recyclerview - this should be done, of course
 * Not running DiffUtil on recyclerview update - i actually create new fragment instance every time, but still can be an improvement
+* Empty list is not handled (explicitly)

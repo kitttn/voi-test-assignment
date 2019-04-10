@@ -2,6 +2,7 @@ package kitttn.di
 
 import dagger.Module
 import dagger.Provides
+import kitttn.api.authenticator.SpotifyAuthenticator
 import kitttn.api.interceptors.AuthExchangeTokenInterceptor
 import kitttn.api.interceptors.SpotifyAuthInterceptor
 import kitttn.api.services.AuthService
@@ -16,13 +17,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 object ApiModule {
     @JvmStatic @Provides
-    fun provideSpotifyService(appStorage: AppStorage): SpotifyService {
+    fun provideSpotifyService(appStorage: AppStorage, authService: AuthService): SpotifyService {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val okHttpClient = OkHttpClient.Builder()
             .addNetworkInterceptor(SpotifyAuthInterceptor(appStorage))
             .addNetworkInterceptor(loggingInterceptor)
+            .authenticator(SpotifyAuthenticator(appStorage, authService))
             .build()
 
         val retrofit = Retrofit.Builder()

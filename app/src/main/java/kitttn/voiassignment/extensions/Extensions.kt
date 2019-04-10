@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
 import kitttn.voiassignment.DaggerComponentProvider
 import kitttn.voiassignment.di.components.AppComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 
 val FragmentActivity.component: AppComponent
     get() = (application as DaggerComponentProvider).component

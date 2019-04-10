@@ -2,31 +2,22 @@ package kitttn.voiassignment.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import kitttn.api.entities.ExchangeTokenRequest
 import kitttn.api.services.AuthService
 import kitttn.common.AppStorage
-import kotlinx.coroutines.*
 import retrofit2.await
 import java.lang.Exception
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class MainViewModel @Inject constructor(
     private val authService: AuthService,
-    private val appStorage: AppStorage) : ViewModel(), CoroutineScope {
+    private val appStorage: AppStorage) : CoroutineViewModel() {
 
     private val screenLiveData = MutableLiveData<MainScreenState>()
     val screenState: LiveData<MainScreenState>
         get() = screenLiveData
 
-    override val coroutineContext: CoroutineContext
-        get() = Job() + Dispatchers.IO
-
-    override fun onCleared() {
-        coroutineContext.cancel()
-        super.onCleared()
-    }
+    fun checkAuthenticationExists(): Boolean = appStorage.getRefreshToken().isNotEmpty()
 
     fun authenticate(code: String) = launch {
         screenLiveData.postValue(MainScreenState.Loading)
