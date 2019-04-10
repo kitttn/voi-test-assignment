@@ -28,6 +28,7 @@ class SearchViewModel @Inject constructor(private val spotifyService: SpotifySer
 
     fun requestArtists(query: String) = launch {
         searchResultsLiveData.postValue(SearchResultsState.Loading)
+        Thread.sleep(2000)
         try {
             val response = spotifyService.getArtists(query).await()
             Log.i(TAG, "requestArtists: Loaded artsts: $response")

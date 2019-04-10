@@ -1,5 +1,8 @@
 package kitttn.voiassignment.extensions
 
+import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
@@ -14,6 +17,12 @@ val Fragment.component: AppComponent
 
 fun <T> LiveData<T>.observe(owner: LifecycleOwner, callback: (T) -> Unit) {
     this.observe(owner, Observer { callback(it) })
+}
+
+fun Fragment.hideKeyboard() {
+    val fragmentView = this.view ?: return
+    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager ?: return
+    imm.hideSoftInputFromWindow(fragmentView.windowToken, 0)
 }
 
 // some SDD (Stackoverflow driven development)

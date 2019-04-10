@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import kitttn.voiassignment.R
-import kitttn.voiassignment.extensions.component
-import kitttn.voiassignment.extensions.createViewModel
-import kitttn.voiassignment.extensions.observe
+import kitttn.voiassignment.extensions.*
 import kitttn.voiassignment.viewmodel.MainScreenState
 import kitttn.voiassignment.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -45,6 +43,8 @@ class SearchFragment : Fragment() {
         }
 
         searchStartBtn.setOnClickListener exit@{
+            hideKeyboard()
+
             val query = searchInputTxt.text.toString()
             if (query.isEmpty())
                 return@exit
